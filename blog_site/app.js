@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+var _=require("lodash");
 const ejs = require("ejs");
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -18,10 +19,21 @@ app.use(express.static("public"));
 const blog=[];
 
 app.get('/', (req, res) => {
-  console.log(blog);
   //we can also use the for each loop in the compose.ejs to transverse the array
   res.render('home',{homeText:homeStartingContent,Blog:blog});
 });
+app.get("/posts/:blog",(req,res)=>{
+  const requestedTitle=req.params.blog;
+  
+  for(let i=0;i<blog.length;i++) {
+    if(_.lowerCase(blog[i].title) === _.lowerCase(requestedTitle)){
+     
+      res.render("post",{Title:requestedTitle,content:blog[i].content})
+    }
+  }
+
+  //blog.forEach(function(post)
+})
 app.get('/about', (req, res) => {
   res.render('about',{aboutText:aboutContent});
 });
@@ -31,7 +43,7 @@ app.get('/contact', (req, res) => {
 });
 
 app.get('/compose', (req, res) => {
-  res.render('compose');
+  res.render('compose');  
 });
 
 app.post('/compose',(req,res) => {

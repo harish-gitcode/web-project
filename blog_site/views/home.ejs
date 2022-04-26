@@ -4,7 +4,9 @@
 
 <%for(let i=0;i<Blog.length;i++){%>
 <h2><%=Blog[i].title%></h2>
-<p><%=Blog[i].content%></p>
+<p><%=Blog[i].content.substring(0,100)+"...."%>
+<a href="/posts/<%=Blog[i].title%>">Read more</a>
+</p>
 <%}%>
 
 
