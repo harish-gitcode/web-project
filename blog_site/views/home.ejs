@@ -1,0 +1,11 @@
+<%- include("partials/header") -%>
+<h1>HOME</h1>
+<p><%= homeText %></p>
+
+<%for(let i=0;i<Blog.length;i++){%>
+<h2><%=Blog[i].title%></h2>
+<p><%=Blog[i].content%></p>
+<%}%>
+
+
+<%-include("partials/footer")-%>

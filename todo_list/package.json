@@ -1,0 +1,17 @@
+{
+  "name": "todo_list",
+  "version": "1.0.0",
+  "description": "A simple TO DO LIST",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harish",
+  "license": "ISC",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "body-parser": "^1.20.0",
+    "ejs": "^3.1.7",
+    "express": "^4.17.3"
+  }
+}
