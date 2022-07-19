@@ -1,0 +1,187 @@
+<!-- Created by Pallavi Bhardwaj [Study 📚 😥] -->
+
+<!-- Created by Pallavi Bhardwaj [Study 📚 😥] -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="calculator-box">
+            <input class="toggle" type="button" value="🌙" id="switch" onclick="ModeSwitcher()">
+            <input type="text" class="calc-area" id="calculation" disabled value="">
+            <input type="text" class="result-area" id="result" disabled value="">
+            <div class="input-area">
+              <div class="input-area-line">
+                <input type="button" class="button grey" value="C" onclick="Reset()">
+                <input type="button" class="button grey" value="%" id="rem" onclick="IR('%')">
+                <input type="button" class="button grey" value="✗" style="font-size:22px;" onclick="Cross()">
+                <input type="button" class="button orange" value="÷" id="div" onclick="IR('/')">
+              </div>
+              <div class="input-area-line">
+                <input type="button" class="button normal" value="7" onclick="IR(7)">
+                <input type="button" class="button normal" value="8" onclick="IR(8)">
+                <input type="button" class="button normal" value="9" onclick="IR(9)">
+                <input type="button" class="button orange" value="×" id="mul" onclick="IR('*')">
+              </div>
+              <div class="input-area-line">
+                <input type="button" class="button normal" value="4" onclick="IR(4)">
+                <input type="button" class="button normal" value="5" onclick="IR(5)">
+                <input type="button" class="button normal" value="6" onclick="IR(6)">
+                <input type="button" class="button orange" value="−" id="minus" onclick="IR('-')">
+              </div>
+              <div class="input-area-line">
+                <input type="button" class="button normal" value="1" onclick="IR(1)">
+                <input type="button" class="button normal" value="2" onclick="IR(2)">
+                <input type="button" class="button normal" value="3" onclick="IR(3)">
+                <input type="button" class="button orange" value="+" id="plus"  onclick="IR('+')">
+              </div>
+              <div class="input-area-line">
+                <input type="button" class="button normal" id="zero" value="0" onclick="IR(0)" style="width:130px;">
+                <input type="button" class="button normal" id="dot" value="." onclick="IR('.')">
+                <input type="button" class="button orange" value="=" onclick="ShowResult()">
+              </div>
+            </div>
+        </div>
+<script>
+var CalcInput = document.querySelector(`#calculation`);
+var CalcChecker = document.querySelector(`#calculation`).value;
+var ResultInput = document.querySelector(`#result`);
+var symbols = ['%','/','+','-','*','.'];
+var f_symbols = ['%','/','+','*'];
+var ResultShown;
+var DarkTheme;
+globalThis.ResultShown = 0;
+globalThis.DarkTheme = 1;
+function Result() {
+    if (! symbols.includes(CalcInput.value.charAt(CalcInput.value.length -1))) {
+        if (typeof eval(CalcInput.value) != 'undefined') {
+        ResultInput.value = eval(CalcInput.value);
+        if (ResultInput.value.length > 10) {
+            document.querySelector(`.result-area`).style.fontSize = `${40-(ResultInput.value.length - 10)*1.9}px`;
+        }
+        }
+    }
+}    
+function IR(value) {
+    if (ResultShown == 1) {
+        CalcInput.style.opacity = '1';       
+        ResultInput.style.fontSize = '40px';
+        CalcInput.value = '';
+        ResultInput.value = '';
+        ResultShown = 0;
+    }
+    
+    if(!((CalcChecker.length == 0) && (f_symbols.includes(value))))
+    CalcChecker += value;
+    var checker = CalcChecker.charAt(CalcChecker.length -2);
+  if (symbols.includes(checker)) {
+      if ((checker == value) && (symbols.includes(CalcChecker.charAt(CalcChecker.length -1)))) {
+          Result();
+      }
+      else if ((checker != value) && ((symbols.includes(CalcChecker.charAt(CalcChecker.length -1))))) {
+          var checkerArray = CalcInput.value.split('');
+          if (CalcInput.value.length > 1) {
+          checkerArray[checkerArray.length -1] = value;
+          }
+          CalcInput.value = checkerArray.join('');
+          Result();
+      }
+      
+      else {
+          CalcInput.value += value;
+          Result();
+      }
+  }
+  else {
+    if (((CalcInput.value.length == 0) && (f_symbols.includes(value)))) {
+        CalcInput.value = '';
+        CalcChecker = '';
+        ResultInput.value = '';
+        
+    }
+    else if (((CalcInput.value.length == 1) && (CalcInput.value == '0') && (value == '0')) || ((CalcInput.value.length == 1) && (CalcInput.value == '.') && (value == '.'))) {        
+    }
+    else if (((CalcInput.value.length == 1) && (CalcInput.value == '0') && (value != '0'))) {        
+        CalcInput.value = '';
+        CalcInput.value += value;
+        Result();
+    }
+    else {
+        CalcInput.value += value;
+        Result();
+     }
+    }
+}
+function Reset() {
+    CalcInput.value = '';
+    ResultInput.value = '';
+    CalcChecker='';
+}
+function Cross() {
+    if (CalcInput.value.length > 1) {
+        CalcInput.value = CalcInput.value.slice(0,CalcInput.value.length-1);
+         Result();
+    }
+    else if (CalcInput.value.length == 1) {
+        CalcInput.value = CalcInput.value.slice(0,CalcInput.value.length-1);
+        ResultInput.value = '';
+    }
+}
+function ShowResult() {
+    CalcInput.style.opacity = '0';
+    ResultInput.style.fontSize = '50px';
+    ResultShown = 1;
+}
+function DarkMode() {
+    document.querySelector(`.calculator-box`).style.background = 'linear-gradient(330deg,#1A1E29,#24242D,#1E2431,#292F3B,#343A48)';
+    document.querySelector(`.calculator-box`).style.boxShadow = '0 0 3px 3px #000 inset,0 0 2.5px 2.5px rgb(255,255,255,0.7) inset,0 10px 10px rgb(0,0,0,0.2)';
+    document.querySelector(`.result-area`).style.color = '#E9EBF2';
+    
+ document.querySelector(`.calc-area`).style.color = '#949FB2';
+    var NormalButtons = document.querySelectorAll(`.normal`);
+    for (let i = 0; i < NormalButtons.length; i++) {
+        NormalButtons[i].classList.add('normal-dark');
+    }
+    var GrayButtons = document.querySelectorAll(`.grey`);
+    for (let i = 0; i < GrayButtons.length; i++) {
+        GrayButtons[i].classList.add('grey-dark');
+    }
+    document.querySelector(`#switch`).style.background = '#DFE3EC';
+    document.querySelector(`#switch`).value = '☀️';
+}
+function LightMode() {
+   document.querySelector(`.calculator-box`).style.background = '#E8EBF4';
+    document.querySelector(`.calculator-box`).style.boxShadow = '0 0 3px 3px #fff inset,0 0 2.5px 2.5px rgb(0,0,0,0.7) inset';
+    document.querySelector(`.result-area`).style.color = 'rgb(0,0,0,0.75)';
+    
+ document.querySelector(`.calc-area`).style.color = 'rgb(0,0,0,0.5)';
+    var NormalButtons = document.querySelectorAll(`.normal`);
+    for (let i = 0; i < NormalButtons.length; i++) {
+        NormalButtons[i].classList.add('normal');
+        NormalButtons[i].classList.remove('normal-dark');    
+    }
+    var GrayButtons = document.querySelectorAll(`.grey`);
+    for (let i = 0; i < GrayButtons.length; i++) {   
+GrayButtons[i].classList.add('grey');
+GrayButtons[i].classList.remove('grey-dark');
+   }
+   document.querySelector(`#switch`).style.background = '#3A404E';
+    document.querySelector(`#switch`).value = '🌙';
+}
+DarkMode()
+function ModeSwitcher() {
+    if (DarkTheme == 1) {
+        LightMode();
+        DarkTheme = 0;
+    }
+    else {
+        DarkMode();
+        DarkTheme = 1;
+    }
+}
+</script>        
+    </body>
+</html>
