@@ -51,9 +51,7 @@ app.get("/posts/:blog", (req, res) => {
   
     //if (_.lowerCase(blog[i].title) === _.lowerCase(requestedTitle)) {
 
-    
-    
-  
+
 
   //blog.forEach(function(post)
 })
